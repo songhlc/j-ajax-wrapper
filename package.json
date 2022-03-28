@@ -1,6 +1,6 @@
 {
   "name": "j-ajax-wrapper",
-  "version": "1.0.0",
+  "version": "sign-1.0.0",
   "description": "重写jquery ajax",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/songhlc/j-ajax-wrapper.git"
+    "url": "https://github.com/songhlc/j-ajax-wrapper.git"
   },
   "author": "songhlc@yonyou.com",
   "license": "ISC",
