@@ -1,0 +1,56 @@
+{
+  "name": "j-ajax-wrapper",
+  "version": "1.0.0",
+  "description": "重写jquery ajax",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "buildall": "rollup -c && npm run build:debug",
+    "build:debug":"cross-env isdebug=true rollup -c",
+    "dev2": "browser-sync start --server --files 'dist/*.js, lib/*.js, index.html'",
+    "dev": "node devconfig/index.js",
+    "watch": "rollup -c && node devconfig/watch.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/songhlc/j-ajax-wrapper.git"
+  },
+  "author": "songhlc@yonyou.com",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@rollup/plugin-json": "^4.1.0",
+    "async-validator": "^1.8.1",
+    "axios": "^0.20.0",
+    "cross-env": "^7.0.3",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.17.4",
+    "knockout": "^3.4.2",
+    "open": "^7.2.1",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "watch": "^1.0.2",
+    "ycloud": "^2.11.3-rc"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/generator": "^7.8.8",
+    "@babel/node": "^7.8.7",
+    "@babel/parser": "^7.8.8",
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/traverse": "^7.8.6",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-latest": "^6.24.1",
+    "browser-sync": "^2.26.7",
+    "rollup": "^2.28.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-banner": "^0.2.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-html": "^0.2.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-uglify": "^6.0.4"
+  }
+}
