@@ -1,3 +1,3 @@
 // jAjaxWrapper v1.0.0 by songhlc@yonyou.com
-!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?module.exports=n():"function"==typeof define&&define.amd?define(n):(e="undefined"!=typeof globalThis?globalThis:e||self).jAjaxWrapper=n()}(this,function(){"use strict";return function(e){var n=e.ajax;e.ajax=function(e){return n(e)}}});
+!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?module.exports=n():"function"==typeof define&&define.amd?define(n):(e="undefined"!=typeof globalThis?globalThis:e||self).jAjaxWrapper=n()}(this,function(){"use strict";return function(e,o){e.ajax;e.ajax=function(n){var e={};if(e.method=n.type,e.url=n.url,e.data=n.data,e.headers={},n.contentType&&(e.headers["Content-Type"]=n.contentType),!n.success)return new Promise(function(n,t){o(e).then(function(e){n(e)}).catch(function(e){t(e)})});o(e).then(function(e){n.success(e)}).catch(function(e){n.error&&n.error(e)})}}});
 //# sourceMappingURL=jAjaxWrapper.js.map

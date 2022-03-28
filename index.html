@@ -6,14 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.26.1/axios.min.js"></script>
 </head>
 <body>
   <script src="./dist/jAjaxWrapper.js"></script>
   <script>
     function load () {
       $.ajax({
-        url: '/test/login',
+        url: '/test/login1',
         type: 'get',
+        contentType: 'application/json',
         success: function () {
 
         },
@@ -21,17 +23,19 @@
           console.log(err)
         }
       });
-      $.get('/test/login',function (d, res) {
-        console.log(d)
+      $.get('/test/login2').then(function (d) {
+        debugger
+      }).catch(e => {
+        debugger
       });
-      $.post('/test/login', {a: 1},function (d, res) {
+      $.post('/test/login3', {a: 1},function (d, res) {
         console.log(d)
-      });
+      }, 'json');
     }
     load()
   </script>
   <script>
-    jAjaxWrapper($);
+    jAjaxWrapper($, axios);
     load();
   </script>
 </body>
