@@ -1,6 +1,6 @@
 {
   "name": "j-ajax-wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "重写jquery ajax",
   "main": "dist/index.js",
   "scripts": {
@@ -26,10 +26,12 @@
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "http-proxy-middleware": "^0.17.4",
+    "json-bigint": "^1.0.0",
     "knockout": "^3.4.2",
     "open": "^7.2.1",
     "qs": "^6.10.3",
     "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
     "watch": "^1.0.2",
     "ycloud": "^2.11.3-rc"
   },

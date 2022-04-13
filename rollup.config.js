@@ -1,7 +1,7 @@
-import babel from 'rollup-plugin-babel'
+import {terser} from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
-import { uglify } from 'rollup-plugin-uglify'
+import babel from 'rollup-plugin-babel'
 import banner from 'rollup-plugin-banner'
 import json from '@rollup/plugin-json';
 import analyze from 'rollup-plugin-analyzer'
@@ -26,7 +26,7 @@ module.exports = {
     resolve({
       preferBuiltins: true
     })]
-    .concat(isdebug ? [] : [uglify()])
+    .concat(isdebug ? [] : [terser()])
     .concat([
       commonjs(),
       banner('jAjaxWrapper v<%= pkg.version %> by <%= pkg.author %>'),
