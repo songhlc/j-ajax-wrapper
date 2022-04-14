@@ -12,7 +12,7 @@ module.exports = {
   input: 'lib/index.js',
   external: [],
   output: {
-    file: `dist/jAjaxWrapper.js`,
+    file: isdebug ? `dist/jAjaxWrapper.debug.js` : `dist/jAjaxWrapper.js`,
     name: 'jAjaxWrapper',
     format: 'umd',
     sourcemap: true

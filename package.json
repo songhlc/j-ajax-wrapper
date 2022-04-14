@@ -1,8 +1,8 @@
 {
   "name": "j-ajax-wrapper",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "重写jquery ajax",
-  "main": "dist/index.js",
+  "main": "dist/jAjaxWrapper.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c",
