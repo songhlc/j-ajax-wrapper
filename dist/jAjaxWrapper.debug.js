@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.9 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.10 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -110,7 +110,7 @@
 	    } else {
 	      return new Promise(function (resolve, reject) {
 	        Axios(axOpt).then(function (res) {
-	          resolve(res);
+	          resolve(res.data);
 	        })["catch"](function (err) {
 	          reject(err);
 	        });
