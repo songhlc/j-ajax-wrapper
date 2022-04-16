@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.6 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.9 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -59,6 +59,11 @@
 	    }
 
 	    var axOpt = {};
+
+	    if (!opts.type) {
+	      opts.type = 'get';
+	    }
+
 	    axOpt.method = opts.type;
 	    axOpt.url = opts.url;
 
@@ -73,7 +78,12 @@
 	    if (opts.contentType) {
 	      axOpt.headers['Content-Type'] = opts.contentType;
 	    } else {
-	      axOpt.headers['Content-Type'] = "application/x-www-form-urlencoded; charset=UTF-8";
+	      // 要支持ajax附件上传的场景
+	      if (opts.contentType === false) {
+	        axOpt.headers['Content-Type'] = "multipart/form-data";
+	      } else {
+	        axOpt.headers['Content-Type'] = "application/x-www-form-urlencoded; charset=UTF-8";
+	      }
 	    }
 
 	    if (opts.beforeSend) {
@@ -107,6 +117,24 @@
 	      });
 	    }
 	  };
+	};
+
+	jAjaxWrapper.isAxiosReady = function (callback) {
+	  var maxTimes = 50;
+	  var count = 0;
+
+	  var _setInterval;
+
+	  var isReady = function isReady() {
+	    count++;
+
+	    if (window.axios || count > maxTimes) {
+	      clearInterval(_setInterval);
+	      callback();
+	    }
+	  };
+
+	  _setInterval = setInterval(isReady, 100);
 	};
 
 	return jAjaxWrapper;

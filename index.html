@@ -35,11 +35,14 @@
         console.log(d)
       }, 'json');
     }
-    load()
+  </script>
+  <script>
+    jAjaxWrapper.isAxiosReady(function () {
+      load();
+    })
   </script>
   <script>
     jAjaxWrapper($, axios);
-    load();
   </script>
 </body>
 </html>
