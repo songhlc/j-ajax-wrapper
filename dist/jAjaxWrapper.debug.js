@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.10 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.13 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -49,6 +49,18 @@
 	  return result;
 	};
 
+	var _stringify = function _stringify(data) {
+	  var response = '';
+
+	  try {
+	    response = JONS.stringify(data);
+	  } catch (e) {
+	    response = data;
+	  }
+
+	  return response;
+	};
+
 	var jAjaxWrapper = function jAjaxWrapper(jQuery, Axios) {
 	  var oldAjax = jQuery.ajax;
 
@@ -61,7 +73,7 @@
 	    var axOpt = {};
 
 	    if (!opts.type) {
-	      opts.type = 'get';
+	      opts.type = opts.method || 'get';
 	    }
 
 	    axOpt.method = opts.type;
@@ -101,7 +113,11 @@
 
 	    if (opts.success) {
 	      Axios(axOpt).then(function (res) {
-	        opts.success(res.data, 'success', res);
+	        if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
+	          opts.success(_stringify(res.data), 'success', res);
+	        } else {
+	          opts.success(res.data, 'success', res);
+	        }
 	      })["catch"](function (err) {
 	        if (opts.error) {
 	          opts.error(err);
@@ -110,7 +126,13 @@
 	    } else {
 	      return new Promise(function (resolve, reject) {
 	        Axios(axOpt).then(function (res) {
-	          resolve(res.data);
+	          var returnData = res.data;
+
+	          if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
+	            returnData = _stringify(res.data);
+	          }
+
+	          resolve(returnData);
 	        })["catch"](function (err) {
 	          reject(err);
 	        });
