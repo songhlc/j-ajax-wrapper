@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.13 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.14 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -53,7 +53,7 @@
 	  var response = '';
 
 	  try {
-	    response = JONS.stringify(data);
+	    response = JSON.stringify(data);
 	  } catch (e) {
 	    response = data;
 	  }
