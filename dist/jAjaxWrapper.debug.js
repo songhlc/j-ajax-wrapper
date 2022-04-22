@@ -53,6 +53,9 @@
 	  var response = '';
 
 	  try {
+			if (typeof data === 'string') {
+				return data
+			}
 	    response = JSON.stringify(data);
 	  } catch (e) {
 	    response = data;
