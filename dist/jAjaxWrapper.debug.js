@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.16 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.17 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -140,19 +140,45 @@
 	        }
 	      });
 	    } else {
-	      return new Promise(function (resolve, reject) {
-	        Axios(axOpt).then(function (res) {
-	          var returnData = res.data;
+	      var resolve = function resolve() {};
 
-	          if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
-	            returnData = _stringify(res.data);
-	          }
+	      var reject = function reject() {};
 
-	          resolve(returnData);
-	        })["catch"](function (err) {
-	          reject(err);
-	        });
+	      var then = function then(_resolve) {
+	        resolve = _resolve;
+	      };
+
+	      var fail = function fail(reject) {
+	        reject = _reject;
+	      };
+
+	      Axios(axOpt).then(function (res) {
+	        var returnData = res.data;
+
+	        if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
+	          returnData = _stringify(res.data);
+	        }
+
+	        resolve(returnData);
+	      })["catch"](function (err) {
+	        reject(err);
 	      });
+	      return {
+	        then: then,
+	        "catch": fail,
+	        fail: fail // $.ajax支持fail
+
+	      }; // return new Promise((resolve, reject) => {
+	      //   Axios(axOpt).then(res => {
+	      //     var returnData = res.data
+	      //     if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
+	      //       returnData = _stringify(res.data)
+	      //     }
+	      //     resolve(returnData)
+	      //   }).catch(err => {
+	      //     reject(err)
+	      //   })
+	      // })
 	    }
 	  };
 	};
