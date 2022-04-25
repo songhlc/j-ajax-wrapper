@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.15 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.16 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -69,7 +69,19 @@
 	  var oldAjax = jQuery.ajax;
 
 	  jQuery.ajax = function (opts) {
-	    // 暂时没有好的办法
+	    if (opts.data && _typeof_1(opts.data) === 'object') {
+	      Object.keys(opts.data).forEach(function (key) {
+	        var d = opts.data[key];
+
+	        if (d && opts.data.__proto__ && !opts.data.__proto__[key]) {
+	          if (typeof d === 'function') {
+	            opts.data[key] = d();
+	          }
+	        }
+	      });
+	    } // 暂时没有好的办法
+
+
 	    if (opts.async === false) {
 	      return oldAjax(opts);
 	    }
