@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.18 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.19 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -29,6 +29,16 @@
 	module.exports = _typeof;
 	});
 
+	// import Qs from 'qs'
+	var formatValue = function formatValue(key, value) {
+	  // 被压缩之后
+	  if (key === 'dataTables' && typeof value === 'string' && value.indexOf("{") !== 0) {
+	    value = encodeURIComponent(value);
+	  }
+
+	  return value;
+	};
+
 	var queryStringify = function queryStringify(data) {
 	  var _data = {};
 
@@ -40,10 +50,12 @@
 
 	  var result = '';
 	  Object.keys(_data).forEach(function (key, index) {
+	    var value = formatValue(key, _data[key]);
+
 	    if (index > 0) {
-	      result += '&' + key + '=' + _data[key];
+	      result += '&' + key + '=' + value;
 	    } else {
-	      result += key + '=' + _data[key];
+	      result += key + '=' + value;
 	    }
 	  });
 	  return result;
