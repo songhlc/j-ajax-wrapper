@@ -32,7 +32,7 @@
 	// import Qs from 'qs'
 	var formatValue = function formatValue(key, value) {
 	  // 被压缩之后
-	  if (key === 'dataTables' && typeof value === 'string' && value.indexOf("{") !== 0) {
+	  if ((key === 'dataTables' || key === 'parameters') && typeof value === 'string' && value.indexOf("{") !== 0) {
 	    value = encodeURIComponent(value);
 	  }
 
