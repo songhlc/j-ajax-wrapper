@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.17 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.18 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -144,12 +144,16 @@
 
 	      var reject = function reject() {};
 
-	      var then = function then(_resolve) {
-	        resolve = _resolve;
+	      var fail = function fail(_reject) {
+	        reject = _reject;
 	      };
 
-	      var fail = function fail(reject) {
-	        reject = _reject;
+	      var then = function then(_resolve) {
+	        resolve = _resolve;
+	        return {
+	          fail: fail,
+	          "catch": fail
+	        };
 	      };
 
 	      Axios(axOpt).then(function (res) {
