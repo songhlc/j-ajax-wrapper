@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.21 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.22 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3859,7 +3859,7 @@
 
 	    axOpt.headers = opts.headers || {};
 
-	    if (!opts.headers['Content-Type']) {
+	    if (!axOpt.headers['Content-Type']) {
 	      if (opts.contentType) {
 	        axOpt.headers['Content-Type'] = opts.contentType;
 	      } else {
