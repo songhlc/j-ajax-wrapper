@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.22 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.23 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3767,6 +3767,10 @@
 	var originJSONparse = JSON.parse;
 
 	JSON.parse = function (str) {
+	  if (str === undefined) {
+	    throw new Error('params should not be undefined!');
+	  }
+
 	  if (typeof str === 'string') {
 	    return originJSONparse(JSON.stringify(jsonBigint.parse(str)));
 	  } else {
