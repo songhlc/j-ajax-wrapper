@@ -3876,6 +3876,12 @@
 	      }
 	    }
 
+	    var contentType = axOpt.headers['Content-Type'] || opts.contentType;
+
+	    if (contentType && contentType.indexOf('application/json') >= 0) {
+	      opts.dataType = 'json';
+	    }
+
 	    if (opts.beforeSend) {
 	      var r = {
 	        setRequestHeader: function setRequestHeader(key, value) {
