@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.23 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.24 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3896,7 +3896,7 @@
 	        } else {
 	          opts.success(res.data, 'success', res);
 	        }
-	      })["catch"](function (err) {
+	      }, function (err) {
 	        if (opts.error) {
 	          opts.error(err);
 	        }
@@ -3914,7 +3914,8 @@
 	        resolve = _resolve;
 	        return {
 	          fail: fail,
-	          "catch": fail
+	          "catch": fail,
+	          error: fail
 	        };
 	      };
 
@@ -3926,12 +3927,13 @@
 	        }
 
 	        resolve(returnData);
-	      })["catch"](function (err) {
+	      }, function (err) {
 	        reject(err);
 	      });
 	      return {
 	        then: then,
 	        "catch": fail,
+	        error: fail,
 	        fail: fail // $.ajax支持fail
 
 	      }; // return new Promise((resolve, reject) => {
