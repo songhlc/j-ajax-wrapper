@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.24 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.25 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3846,6 +3846,10 @@
 	      return oldAjax(opts);
 	    }
 
+	    if (opts.url && opts.url.indexOf('defdoc/selectdefdocbytype') >= 0) {
+	      return oldAjax(opts);
+	    }
+
 	    var axOpt = {};
 
 	    if (!opts.type) {
@@ -3878,7 +3882,7 @@
 
 	    var contentType = axOpt.headers['Content-Type'] || opts.contentType;
 
-	    if (contentType && contentType.indexOf('application/json') >= 0) {
+	    if (contentType && contentType.indexOf('application/json') >= 0 && !opts.dataType) {
 	      opts.dataType = 'json';
 	    }
 
