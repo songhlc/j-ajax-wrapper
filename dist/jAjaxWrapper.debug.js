@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.25 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.27 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3780,7 +3780,8 @@
 
 	var formatValue = function formatValue(key, value) {
 	  // 被压缩之后
-	  if ((key === 'dataTables' || key === 'parameters') && typeof value === 'string' && value.indexOf("{") !== 0) {
+	  // if ((key==='dataTables' || key ==='parameters') && typeof value === 'string' && value.indexOf("{") !== 0) {
+	  if (key === 'dataTables' || key === 'parameters') {
 	    value = encodeURIComponent(value);
 	  }
 
@@ -3901,7 +3902,9 @@
 
 	    if (opts.success) {
 	      Axios(axOpt).then(function (res) {
-	        if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
+	        var responseContentType = res.headers['content-type'] || '';
+
+	        if (responseContentType.indexOf('application/json') < 0 && (!opts.dataType || opts.dataType.toLowerCase() == 'text')) {
 	          opts.success(_stringify(res.data), 'success', res);
 	        } else {
 	          opts.success(res.data, 'success', res);
@@ -3931,8 +3934,9 @@
 
 	      Axios(axOpt).then(function (res) {
 	        var returnData = res.data;
+	        var responseContentType = res.headers['content-type'] || '';
 
-	        if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
+	        if (responseContentType.indexOf('application/json') < 0 && (!opts.dataType || opts.dataType.toLowerCase() == 'text')) {
 	          returnData = _stringify(res.data);
 	        }
 
