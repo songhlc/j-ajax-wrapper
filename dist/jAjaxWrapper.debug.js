@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.27 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.28 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3919,17 +3919,16 @@
 
 	      var reject = function reject() {};
 
+	      var _promise = {};
+
 	      var fail = function fail(_reject) {
 	        reject = _reject;
+	        return _promise;
 	      };
 
 	      var then = function then(_resolve) {
 	        resolve = _resolve;
-	        return {
-	          fail: fail,
-	          "catch": fail,
-	          error: fail
-	        };
+	        return _promise;
 	      };
 
 	      Axios(axOpt).then(function (res) {
@@ -3944,13 +3943,14 @@
 	      }, function (err) {
 	        reject(err);
 	      });
-	      return {
+	      _promise = {
 	        then: then,
 	        "catch": fail,
 	        error: fail,
 	        fail: fail // $.ajax支持fail
 
-	      }; // return new Promise((resolve, reject) => {
+	      };
+	      return _promise; // return new Promise((resolve, reject) => {
 	      //   Axios(axOpt).then(res => {
 	      //     var returnData = res.data
 	      //     if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
