@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.28 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.29 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3915,7 +3915,7 @@
 	        }
 	      });
 	    } else {
-	      var resolve = function resolve() {};
+	      var resolve = [];
 
 	      var reject = function reject() {};
 
@@ -3927,7 +3927,7 @@
 	      };
 
 	      var then = function then(_resolve) {
-	        resolve = _resolve;
+	        resolve.push(_resolve);
 	        return _promise;
 	      };
 
@@ -3939,7 +3939,13 @@
 	          returnData = _stringify(res.data);
 	        }
 
-	        resolve(returnData);
+	        resolve && resolve.forEach(function (fn) {
+	          try {
+	            fn(returnData);
+	          } catch (e) {
+	            console.error(e);
+	          }
+	        });
 	      }, function (err) {
 	        reject(err);
 	      });
@@ -3950,17 +3956,7 @@
 	        fail: fail // $.ajax支持fail
 
 	      };
-	      return _promise; // return new Promise((resolve, reject) => {
-	      //   Axios(axOpt).then(res => {
-	      //     var returnData = res.data
-	      //     if (!opts.dataType || opts.dataType.toLowerCase() == 'text') {
-	      //       returnData = _stringify(res.data)
-	      //     }
-	      //     resolve(returnData)
-	      //   }).catch(err => {
-	      //     reject(err)
-	      //   })
-	      // })
+	      return _promise;
 	    }
 	  };
 	};
