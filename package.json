@@ -1,6 +1,6 @@
 {
   "name": "j-ajax-wrapper",
-  "version": "1.0.29",
+  "version": "1.0.33",
   "description": "重写jquery ajax",
   "main": "dist/jAjaxWrapper.js",
   "scripts": {

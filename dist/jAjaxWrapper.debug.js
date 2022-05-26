@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.29 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.33 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3978,6 +3978,38 @@
 
 	  _setInterval = setInterval(isReady, 100);
 	};
+
+	var isJqueryReady = function isJqueryReady(callback) {
+	  var maxTimes = 50;
+	  var count = 0;
+
+	  var _setInterval;
+
+	  var isReady = function isReady() {
+	    count++;
+
+	    if (window.$ && window.$.isNumeric || count > maxTimes) {
+	      clearInterval(_setInterval);
+	      callback();
+	    }
+	  };
+
+	  _setInterval = setInterval(isReady, 200);
+	};
+
+	isJqueryReady(function () {
+	  if (window.$ && window.$.isNumeric) {
+	    var oldisNumberic = $.isNumeric;
+
+	    $.isNumeric = function (a) {
+	      if (typeof a === 'string' && a.length > 15) {
+	        return false;
+	      }
+
+	      return oldisNumberic(a);
+	    };
+	  }
+	});
 
 	return jAjaxWrapper;
 
