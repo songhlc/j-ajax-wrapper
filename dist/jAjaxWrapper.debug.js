@@ -3755,7 +3755,7 @@
 	var json_stringify = stringify.stringify;
 
 
-	var jsonBigint = function(options) {
+	var jsonBigintSupportDecimal = function(options) {
 	    return  {
 	        parse: parse(options),
 	        stringify: json_stringify
@@ -3764,10 +3764,10 @@
 	//create the default method members with no options applied for backwards compatibility
 	var parse$1 = parse();
 	var stringify$1 = json_stringify;
-	jsonBigint.parse = parse$1;
-	jsonBigint.stringify = stringify$1;
+	jsonBigintSupportDecimal.parse = parse$1;
+	jsonBigintSupportDecimal.stringify = stringify$1;
 
-	var JsonBigString = jsonBigint({
+	var JsonBigString = jsonBigintSupportDecimal({
 	  storeAsString: true
 	});
 
