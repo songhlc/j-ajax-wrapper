@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.33 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.34 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3377,7 +3377,9 @@
 	/*members "", "\"", "\/", "\\", at, b, call, charAt, f, fromCharCode,
 	    hasOwnProperty, message, n, name, prototype, push, r, t, text
 	*/
-
+	Number.isSafeInteger = Number.isSafeInteger || function (value) {
+	  return Number.isInteger(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER;
+	};
 	var json_parse = function (options) {
 
 	  // This is a function that can parse a JSON text, producing a JavaScript
@@ -3514,20 +3516,21 @@
 	        error('Bad number');
 	      } else {
 	        if (BigNumber$1 == null) BigNumber$1 = require$$0;
-	        //if (number > 9007199254740992 || number < -9007199254740992)
-	        // Bignumber has stricter check: everything with length > 15 digits disallowed
-	        if (string.length > 15)
-	          return _options.storeAsString
-	            ? string
-	            : _options.useNativeBigInt
-	            ? BigInt(string)
-	            : new BigNumber$1(string);
-	        else
+	        if (Number.isSafeInteger(number))
 	          return !_options.alwaysParseAsBig
 	            ? number
 	            : _options.useNativeBigInt
 	            ? BigInt(number)
 	            : new BigNumber$1(number);
+	        else
+	          // Number with fractional part should be treated as number(double) including big integers in scientific notation, i.e 1.79e+308
+	          return _options.storeAsString
+	            ? string
+	            : /[\.eE]/.test(string)
+	            ? number
+	            : _options.useNativeBigInt
+	            ? BigInt(string)
+	            : new BigNumber$1(string);
 	      }
 	    },
 	    string = function () {
@@ -3764,7 +3767,9 @@
 	jsonBigint.parse = parse$1;
 	jsonBigint.stringify = stringify$1;
 
-	var originJSONparse = JSON.parse;
+	var JsonBigString = jsonBigint({
+	  storeAsString: true
+	});
 
 	JSON.parse = function (str) {
 	  if (str === undefined) {
@@ -3772,7 +3777,9 @@
 	  }
 
 	  if (typeof str === 'string') {
-	    return originJSONparse(JSON.stringify(jsonBigint.parse(str)));
+	    // console.log(JsonBigString.parse(str))
+	    // console.log(originJSONparse(JSON.stringify(JsonBig.parse(str))))
+	    return JsonBigString.parse(str);
 	  } else {
 	    return str;
 	  }
