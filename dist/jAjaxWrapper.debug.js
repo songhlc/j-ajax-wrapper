@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.34 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.35 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3767,9 +3767,12 @@
 	jsonBigintSupportDecimal.parse = parse$1;
 	jsonBigintSupportDecimal.stringify = stringify$1;
 
+	var originJSONparse = JSON.parse;
+	window.originJSONparse = originJSONparse;
 	var JsonBigString = jsonBigintSupportDecimal({
 	  storeAsString: true
 	});
+	window.JsonBigString = JsonBigString;
 
 	JSON.parse = function (str) {
 	  if (str === undefined) {
@@ -3779,7 +3782,7 @@
 	  if (typeof str === 'string') {
 	    // console.log(JsonBigString.parse(str))
 	    // console.log(originJSONparse(JSON.stringify(JsonBig.parse(str))))
-	    return JsonBigString.parse(str);
+	    return originJSONparse(JsonBigString.stringify(JsonBigString.parse(str)));
 	  } else {
 	    return str;
 	  }
