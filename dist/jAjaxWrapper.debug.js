@@ -1,4 +1,4 @@
-// jAjaxWrapper v1.0.35 by songhlc@yonyou.com
+// jAjaxWrapper v1.0.38 by songhlc@yonyou.com
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -3525,7 +3525,7 @@
 	        else
 	          // Number with fractional part should be treated as number(double) including big integers in scientific notation, i.e 1.79e+308
 	          return _options.storeAsString
-	            ? string
+	            ? (/[\.eE]/.test(string) && (number + '').length < 16 ? number : string)
 	            : /[\.eE]/.test(string)
 	            ? number
 	            : _options.useNativeBigInt
@@ -3772,7 +3772,12 @@
 	var JsonBigString = jsonBigintSupportDecimal({
 	  storeAsString: true
 	});
-	window.JsonBigString = JsonBigString;
+	window.JsonBigString = JsonBigString; // 重写string
+
+	String.prototype.toFixed = function (v) {
+	  var value = this.valueOf();
+	  return isNaN(value) ? value : Number(value).toFixed(v);
+	};
 
 	JSON.parse = function (str) {
 	  if (str === undefined) {
